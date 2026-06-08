@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh repo *)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:docs.google.com)",
+      "WebFetch(domain:doc-0c-6o-docstext.googleusercontent.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(curl -L \"https://raw.githubusercontent.com/Lumryanrea/Footwear-Sales/main/Dashboards/Overview.png\" -o \"C:/Users/umar/Documents/app/public/images/footwear-overview.png\")",
+      "Bash(curl -L \"https://raw.githubusercontent.com/Lumryanrea/Footwear-Sales/main/Dashboards/Growth.png\" -o \"C:/Users/umar/Documents/app/public/images/footwear-growth.png\")",
+      "Bash(curl -L \"https://raw.githubusercontent.com/Lumryanrea/Footwear-Sales/main/Dashboards/Market.png\" -o \"C:/Users/umar/Documents/app/public/images/footwear-market.png\")",
+      "Bash(curl -L \"https://raw.githubusercontent.com/Lumryanrea/Footwear-Sales/main/Dashboards/pricing.png\" -o \"C:/Users/umar/Documents/app/public/images/footwear-pricing.png\")",
+      "WebFetch(domain:api.github.com)",
+      "Bash(curl -L \"https://raw.githubusercontent.com/Lumryanrea/Footwear-Sales/master/Dashboards/Overview.png\" -o \"C:/Users/umar/Documents/app/public/images/footwear-overview.png\" --max-time 30)",
+      "Bash(curl -L \"https://raw.githubusercontent.com/Lumryanrea/Footwear-Sales/master/Dashboards/Growth.png\" -o \"C:/Users/umar/Documents/app/public/images/footwear-growth.png\" --max-time 30)"
+    ]
+  }
+}
