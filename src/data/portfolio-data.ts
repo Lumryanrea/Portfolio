@@ -171,7 +171,7 @@ export const portfolioData = {
       description: "A commercial analytics project that transformed flat sports footwear sales data into a star schema model. This revealed that revenue is high-price-band driven and gave brands the intelligence to act on it.",
       tech: ["Power BI", "DAX", "Power Query", "Business Intelligence"],
       image: "/images/footwear-overview.png",
-      detailImages: ["/images/footwear-overview.png", "/images/footwear-growth.png"],
+      detailImages: ["/images/footwear-overview.png", "/images/footwear-growth.png", "/images/footwear-Market.png", "/images/footwear-pricing.png"],
       overview: "This project analyzed global sports footwear sales across six major brands (Nike, Adidas, Puma, Reebok, ASICS, New Balance) from 2018-2026. The core challenge was transforming unstructured flat data into a proper star schema to enable reliable revenue attribution, year-on-year analysis, and pricing intelligence across markets.",
       objectives: [
         "Transform flat, unstructured sales data into a clean star schema data model",
@@ -204,14 +204,9 @@ export const portfolioData = {
   
   certifications: [
     {
-      name: "Microsoft | PL-300 Data Analyst Associate",
-      badge: "/images/microsoft-badge.png",
-      organization: "Microsoft"
-    },
-    {
-      name: "Databricks | Certified Data Analyst",
-      badge: "/images/databricks-badge.png",
-      organization: "Databricks"
+      name: "ALX Africa | Data Analytics Certificate",
+      badge: "/images/alx-badge.jpg",
+      organization: "ALX Africa"
     }
   ] as Certification[],
   

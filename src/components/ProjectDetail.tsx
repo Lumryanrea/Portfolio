@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
-import { useEffect } from 'react';
+import { ArrowLeft, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { portfolioData } from '../data/portfolio-data';
 import { ScrollReveal } from './ScrollReveal';
 import { SocialButton } from './SocialButton';
@@ -9,6 +9,7 @@ import { SocialButton } from './SocialButton';
 export function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
   const project = portfolioData.projects.find(p => p.id === id);
+  const [expandedImage, setExpandedImage] = useState<string | null>(null);
 
   // Scroll to top when component mounts
   useEffect(() => {
@@ -34,7 +35,7 @@ export function ProjectDetail() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className="min-h-screen py-12 px-6 md:px-10"
+      className="min-h-screen py-12 px-6 md:px-10 overflow-x-hidden"
     >
       {/* Back Button */}
       <motion.div
@@ -52,6 +53,9 @@ export function ProjectDetail() {
         </Link>
       </motion.div>
 
+      {/* Main Content Container */}
+      <div className="w-full max-w-6xl mx-auto">
+
       {/* Project Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -68,27 +72,66 @@ export function ProjectDetail() {
         <div className="w-16 h-0.5 bg-[#5DADE2] mt-4" />
       </motion.div>
 
-      {/* Project Images */}
-      <div className="space-y-8 mb-12">
-        {(project.detailImages || [project.image]).map((img, index) => (
-          <ScrollReveal key={index} delay={index * 0.1}>
-            <motion.div
-              className="rounded-xl overflow-hidden shadow-lg bg-gray-800"
-              whileHover={{ scale: 1.01 }}
-              transition={{ duration: 0.3 }}
-            >
-              <img
-                src={img}
-                alt={`${project.title} screenshot ${index + 1}`}
-                className="w-full h-auto object-cover"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500"%3E%3Crect width="800" height="500" fill="%23333"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="24" fill="%23666"%3E${project.title} Dashboard%3C/text%3E%3C/svg%3E`;
-                }}
-              />
-            </motion.div>
-          </ScrollReveal>
-        ))}
+      {/* Project Images Grid */}
+      <div className="mb-12">
+        <div className="grid grid-cols-2 gap-4">
+          {(project.detailImages || [project.image]).map((img, index) => (
+            <ScrollReveal key={index} delay={index * 0.1}>
+              <motion.button
+                onClick={() => setExpandedImage(img)}
+                className="rounded-xl overflow-hidden shadow-lg bg-gray-800 w-full cursor-pointer group"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="relative aspect-video overflow-hidden">
+                  <img
+                    src={img}
+                    alt={`${project.title} screenshot ${index + 1}`}
+                    className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500"%3E%3Crect width="800" height="500" fill="%23333"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="24" fill="%23666"%3E${project.title} Dashboard%3C/text%3E%3C/svg%3E`;
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                    <span className="text-white/0 group-hover:text-white/100 text-sm font-medium transition-all duration-300">Click to expand</span>
+                  </div>
+                </div>
+              </motion.button>
+            </ScrollReveal>
+          ))}
+        </div>
       </div>
+
+      {/* Expanded Image Modal */}
+      {expandedImage && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setExpandedImage(null)}
+          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
+        >
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-w-5xl max-h-[90vh] w-full"
+          >
+            <img
+              src={expandedImage}
+              alt="Expanded project image"
+              className="w-full h-full object-contain rounded-lg"
+            />
+            <button
+              onClick={() => setExpandedImage(null)}
+              className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors duration-200"
+            >
+              <X className="w-6 h-6 text-white" />
+            </button>
+          </motion.div>
+        </motion.div>
+      )}
 
       {/* Project Content */}
       <div className="max-w-3xl">
@@ -220,6 +263,8 @@ export function ProjectDetail() {
           </div>
         </div>
       </ScrollReveal>
+      </div>
+      {/* End Main Content Container */}
     </motion.div>
   );
 }
