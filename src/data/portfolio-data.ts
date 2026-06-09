@@ -11,6 +11,7 @@ export interface Project {
   businessImpact?: string[];
   technicalSummary?: string[];
   outcome?: string;
+  liveLink?: string;
 }
 
 export interface Certification {
@@ -98,7 +99,7 @@ export const portfolioData = {
       description: "A property and transaction analytics dashboard that uncovers pricing trends, market performance drivers, and segment comparisons. This gives stakeholders the clarity to make confident, data-backed decisions.",
       tech: ["Excel", "PowerPoint"],
       image: "/images/realestate-dashboard.png",
-      detailImages: ["/images/realestate-dashboard.png"],
+      detailImages: ["/images/realestate-dashboard.png", "/images/realestate-revenue.png", "/images/realestate-insights.png", "/images/realestate-assets.png"],
       overview: "This real estate analytics project transformed raw property and transaction data into an interactive dashboard, making it easy to identify what drives pricing, where the market is moving, and which segments outperform. It was designed for both analytical depth and stakeholder accessibility.",
       objectives: [
         "Identify key pricing trends and the factors that drive property value",
@@ -172,6 +173,7 @@ export const portfolioData = {
       tech: ["Power BI", "DAX", "Power Query", "Business Intelligence"],
       image: "/images/footwear-overview.png",
       detailImages: ["/images/footwear-overview.png", "/images/footwear-growth.png", "/images/footwear-Market.png", "/images/footwear-pricing.png"],
+      liveLink: "https://app.powerbi.com/view?r=eyJrIjoiMDlkNzEyMWQtZDMxYi00ZWRhLWJhY2YtZDQ4YzRkZDBkNDc0IiwidCI6IjgzYTc4NThjLTlmMzktNGQ0Yi04MjY4LWEyZDkxMmRjNGM1OCJ9",
       overview: "This project analyzed global sports footwear sales across six major brands (Nike, Adidas, Puma, Reebok, ASICS, New Balance) from 2018-2026. The core challenge was transforming unstructured flat data into a proper star schema to enable reliable revenue attribution, year-on-year analysis, and pricing intelligence across markets.",
       objectives: [
         "Transform flat, unstructured sales data into a clean star schema data model",

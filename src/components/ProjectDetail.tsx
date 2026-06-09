@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
+import { createPortal } from 'react-dom';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, X } from 'lucide-react';
+import { ArrowLeft, X, ExternalLink } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { portfolioData } from '../data/portfolio-data';
 import { ScrollReveal } from './ScrollReveal';
@@ -15,6 +16,19 @@ export function ProjectDetail() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
+
+  // Scroll to top when image is expanded
+  useEffect(() => {
+    if (expandedImage) {
+      window.scrollTo(0, 0);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [expandedImage]);
 
   if (!project) {
     return (
@@ -35,23 +49,19 @@ export function ProjectDetail() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className="min-h-screen py-12 px-6 md:px-10 overflow-x-hidden"
+      className="min-h-screen pt-24 pb-12 px-6 md:px-10 overflow-x-hidden"
     >
-      {/* Back Button */}
-      <motion.div
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.1 }}
-        className="mb-8"
-      >
+      {/* Fixed Back Button - rendered via portal to escape transformed ancestor */}
+      {createPortal(
         <Link
           to="/"
-          className="btn-outline inline-flex items-center gap-2"
+          className="btn-outline fixed top-6 left-6 z-[90] inline-flex items-center gap-2 backdrop-blur-sm bg-[#3D3D4E]/60"
         >
           <ArrowLeft className="w-4 h-4" />
           BACK
-        </Link>
-      </motion.div>
+        </Link>,
+        document.body
+      )}
 
       {/* Main Content Container */}
       <div className="w-full max-w-6xl mx-auto">
@@ -74,8 +84,10 @@ export function ProjectDetail() {
 
       {/* Project Images Grid */}
       <div className="mb-12">
-        <div className="grid grid-cols-2 gap-4">
-          {(project.detailImages || [project.image]).map((img, index) => (
+        <div className={`grid gap-4 ${(project.detailImages || [project.image]).length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
+          {(project.detailImages || [project.image]).map((img, index) => {
+            const isSingle = (project.detailImages || [project.image]).length === 1;
+            return (
             <ScrollReveal key={index} delay={index * 0.1}>
               <motion.button
                 onClick={() => setExpandedImage(img)}
@@ -83,11 +95,11 @@ export function ProjectDetail() {
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="relative aspect-video overflow-hidden">
+                <div className={`relative overflow-hidden ${isSingle ? '' : 'aspect-video'}`}>
                   <img
                     src={img}
                     alt={`${project.title} screenshot ${index + 1}`}
-                    className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                    className={`w-full ${isSingle ? 'h-auto object-contain' : 'h-full object-cover'} group-hover:brightness-110 transition-all duration-300`}
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500"%3E%3Crect width="800" height="500" fill="%23333"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="24" fill="%23666"%3E${project.title} Dashboard%3C/text%3E%3C/svg%3E`;
                     }}
@@ -98,40 +110,27 @@ export function ProjectDetail() {
                 </div>
               </motion.button>
             </ScrollReveal>
-          ))}
+            );
+          })}
         </div>
-      </div>
 
-      {/* Expanded Image Modal */}
-      {expandedImage && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={() => setExpandedImage(null)}
-          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
-        >
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-            onClick={(e) => e.stopPropagation()}
-            className="relative max-w-5xl max-h-[90vh] w-full"
-          >
-            <img
-              src={expandedImage}
-              alt="Expanded project image"
-              className="w-full h-full object-contain rounded-lg"
-            />
-            <button
-              onClick={() => setExpandedImage(null)}
-              className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors duration-200"
-            >
-              <X className="w-6 h-6 text-white" />
-            </button>
-          </motion.div>
-        </motion.div>
-      )}
+        {/* View Live Dashboard Button */}
+        {project.liveLink && (
+          <ScrollReveal delay={0.2}>
+            <div className="flex justify-start mt-6">
+              <a
+                href={project.liveLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary inline-flex items-center gap-1.5 text-xs px-4 py-2"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                VIEW
+              </a>
+            </div>
+          </ScrollReveal>
+        )}
+      </div>
 
       {/* Project Content */}
       <div className="max-w-3xl">
@@ -265,6 +264,38 @@ export function ProjectDetail() {
       </ScrollReveal>
       </div>
       {/* End Main Content Container */}
+
+      {/* Expanded Image Modal - rendered via portal to escape transformed ancestor */}
+      {expandedImage && createPortal(
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setExpandedImage(null)}
+          className="fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-4"
+        >
+          <button
+            onClick={() => setExpandedImage(null)}
+            className="fixed top-6 right-6 z-[110] p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors duration-200"
+          >
+            <X className="w-6 h-6 text-white" />
+          </button>
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-w-5xl max-h-[90vh] w-full"
+          >
+            <img
+              src={expandedImage}
+              alt="Expanded project image"
+              className="w-full h-full object-contain rounded-lg"
+            />
+          </motion.div>
+        </motion.div>,
+        document.body
+      )}
     </motion.div>
   );
 }

@@ -12,7 +12,12 @@
       "Bash(curl -L \"https://raw.githubusercontent.com/Lumryanrea/Footwear-Sales/main/Dashboards/pricing.png\" -o \"C:/Users/umar/Documents/app/public/images/footwear-pricing.png\")",
       "WebFetch(domain:api.github.com)",
       "Bash(curl -L \"https://raw.githubusercontent.com/Lumryanrea/Footwear-Sales/master/Dashboards/Overview.png\" -o \"C:/Users/umar/Documents/app/public/images/footwear-overview.png\" --max-time 30)",
-      "Bash(curl -L \"https://raw.githubusercontent.com/Lumryanrea/Footwear-Sales/master/Dashboards/Growth.png\" -o \"C:/Users/umar/Documents/app/public/images/footwear-growth.png\" --max-time 30)"
+      "Bash(curl -L \"https://raw.githubusercontent.com/Lumryanrea/Footwear-Sales/master/Dashboards/Growth.png\" -o \"C:/Users/umar/Documents/app/public/images/footwear-growth.png\" --max-time 30)",
+      "Bash(mkdir -p /tmp/vidframes)",
+      "Bash(ffmpeg -version)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)"
     ]
   }
 }
