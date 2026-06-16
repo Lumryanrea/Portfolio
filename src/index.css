@@ -11,7 +11,7 @@
     --bg-gradient-mid: #A8C8D8;
     --bg-gradient-end: #B8D4E3;
     --card-bg: #3D3D4E;
-    --card-bg-transparent: rgba(61, 61, 78, 0.98);
+    --card-bg-transparent: rgba(61, 61, 78, 0.9);
     --accent-primary: #5DADE2;
     --accent-hover: #4A9BD1;
     --text-primary: #FFFFFF;
@@ -41,6 +41,14 @@
     --input: 240 5% 30%;
     --ring: 200 70% 62%;
     --radius: 0.625rem;
+  }
+
+  /* On mobile the card is near full-width, so make it more translucent
+     to let the background visuals read through as frosted shapes. */
+  @media (max-width: 767px) {
+    :root {
+      --card-bg-transparent: rgba(61, 61, 78, 0.74);
+    }
   }
 }
 

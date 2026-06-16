@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ScrollReveal } from './ScrollReveal';
@@ -9,9 +10,29 @@ import {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
+  type CarouselApi,
 } from './ui/carousel';
 
 export function FeaturedProjects() {
+  const [api, setApi] = useState<CarouselApi>();
+  const [selected, setSelected] = useState(0);
+  const [snaps, setSnaps] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (!api) return;
+    const onSelect = () => setSelected(api.selectedScrollSnap());
+    setSnaps(api.scrollSnapList());
+    onSelect();
+    api.on('select', onSelect);
+    api.on('reInit', () => {
+      setSnaps(api.scrollSnapList());
+      onSelect();
+    });
+    return () => {
+      api.off('select', onSelect);
+    };
+  }, [api]);
+
   return (
     <section className="px-6 py-16 md:px-10">
       <ScrollReveal>
@@ -25,6 +46,7 @@ export function FeaturedProjects() {
         <div className="max-w-6xl mx-auto">
           <Carousel
             opts={{ align: 'start', loop: false }}
+            setApi={setApi}
             className="w-full"
           >
             <CarouselContent className="-ml-4">
@@ -67,6 +89,25 @@ export function FeaturedProjects() {
             <CarouselPrevious className="hidden md:flex left-0 bg-[#3D3D4E]/80 border-white/30 text-white hover:bg-[#3D3D4E]" />
             <CarouselNext className="hidden md:flex right-0 bg-[#3D3D4E]/80 border-white/30 text-white hover:bg-[#3D3D4E]" />
           </Carousel>
+
+          {/* Dot indicators */}
+          {snaps.length > 1 && (
+            <div className="flex justify-center gap-2 mt-6">
+              {snaps.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => api?.scrollTo(i)}
+                  aria-label={`Go to slide ${i + 1}`}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    selected === i
+                      ? 'w-6 bg-[#5DADE2]'
+                      : 'w-2 bg-white/30 hover:bg-white/50'
+                  }`}
+                />
+              ))}
+            </div>
+          )}
+          <p className="text-center text-white/40 text-xs mt-3 md:hidden">Swipe to see more</p>
         </div>
       </ScrollReveal>
     </section>

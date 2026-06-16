@@ -4,6 +4,7 @@ import { Home } from './pages/Home';
 import { ProjectDetail } from './components/ProjectDetail';
 import { TeachingPage } from './components/TeachingPage';
 import { ConsultingPage } from './components/ConsultingPage';
+import { BackgroundVisuals } from './components/BackgroundVisuals';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -23,7 +24,8 @@ function AnimatedRoutes() {
 function App() {
   return (
     <Router>
-      <div className="min-h-screen py-4 px-4 md:py-8 md:px-8">
+      <BackgroundVisuals />
+      <div className="relative z-10 min-h-screen py-4 px-4 md:py-8 md:px-8">
         <div className="portfolio-card">
           <AnimatedRoutes />
         </div>

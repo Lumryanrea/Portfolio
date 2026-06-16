@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Hero } from '../components/Hero';
 import { AboutMe } from '../components/AboutMe';
@@ -11,6 +11,24 @@ import { Footer } from '../components/Footer';
 export function Home() {
   const aboutRef = useRef<HTMLDivElement>(null);
   const topRef = useRef<HTMLDivElement>(null);
+
+  // Remember/restore scroll position so returning from a detail page
+  // lands you back where you were (e.g. the projects section), not the top.
+  useEffect(() => {
+    const saved = sessionStorage.getItem('homeScrollY');
+    if (saved) {
+      const y = parseInt(saved, 10);
+      // Wait for the page to finish its entrance transition before restoring.
+      const id = window.setTimeout(() => window.scrollTo(0, y), 60);
+      return () => window.clearTimeout(id);
+    }
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => sessionStorage.setItem('homeScrollY', String(window.scrollY));
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const scrollToAbout = () => {
     aboutRef.current?.scrollIntoView({ behavior: 'smooth' });

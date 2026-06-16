@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { GraduationCap, TrendingUp, Users, Globe, ExternalLink, ArrowRight, Handshake } from 'lucide-react';
@@ -5,6 +6,14 @@ import { ScrollReveal } from './ScrollReveal';
 import { SectionDivider } from './SectionDivider';
 import { LumryLockup } from './LumryBrand';
 import { portfolioData } from '../data/portfolio-data';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+  type CarouselApi,
+} from './ui/carousel';
 
 // Animated handshake illustration for "Projects for Contract"
 function ContractIllustration() {
@@ -54,6 +63,25 @@ interface Service {
 }
 
 export function Services() {
+  const [api, setApi] = useState<CarouselApi>();
+  const [selected, setSelected] = useState(0);
+  const [snaps, setSnaps] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (!api) return;
+    const onSelect = () => setSelected(api.selectedScrollSnap());
+    setSnaps(api.scrollSnapList());
+    onSelect();
+    api.on('select', onSelect);
+    api.on('reInit', () => {
+      setSnaps(api.scrollSnapList());
+      onSelect();
+    });
+    return () => {
+      api.off('select', onSelect);
+    };
+  }, [api]);
+
   const services: Service[] = [
     {
       id: 'teaching',
@@ -164,35 +192,48 @@ export function Services() {
         </div>
       </ScrollReveal>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {services.map((service, index) => {
-          const cardClass =
-            'h-full flex flex-col rounded-2xl overflow-hidden bg-[#3D3D4E]/60 backdrop-blur-sm shadow-lg group';
-          const motionProps = {
-            initial: { opacity: 0, y: 40 },
-            whileInView: { opacity: 1, y: 0 },
-            viewport: { once: true, amount: 0.2 },
-            transition: { duration: 0.5, delay: index * 0.1, ease: 'easeOut' as const },
-            whileHover: { y: -6 },
-          };
+      <ScrollReveal delay={0.1}>
+        <div className="max-w-6xl mx-auto">
+          <Carousel opts={{ align: 'start', loop: false }} setApi={setApi} className="w-full">
+            <CarouselContent className="-ml-4">
+              {services.map((service) => {
+                const cardClass =
+                  'h-full flex flex-col rounded-2xl overflow-hidden bg-[#3D3D4E]/60 backdrop-blur-sm shadow-lg group';
+                return (
+                  <CarouselItem key={service.id} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                    {service.route ? (
+                      <Link to={service.route} className={`${cardClass} cursor-pointer`}>
+                        {renderCardInner(service)}
+                      </Link>
+                    ) : (
+                      <div className={cardClass}>{renderCardInner(service)}</div>
+                    )}
+                  </CarouselItem>
+                );
+              })}
+            </CarouselContent>
+            <CarouselPrevious className="hidden md:flex left-0 bg-[#3D3D4E]/80 border-white/30 text-white hover:bg-[#3D3D4E]" />
+            <CarouselNext className="hidden md:flex right-0 bg-[#3D3D4E]/80 border-white/30 text-white hover:bg-[#3D3D4E]" />
+          </Carousel>
 
-          if (service.route) {
-            return (
-              <motion.div key={service.id} {...motionProps}>
-                <Link to={service.route} className={`${cardClass} cursor-pointer`}>
-                  {renderCardInner(service)}
-                </Link>
-              </motion.div>
-            );
-          }
-
-          return (
-            <motion.div key={service.id} className={cardClass} {...motionProps}>
-              {renderCardInner(service)}
-            </motion.div>
-          );
-        })}
-      </div>
+          {/* Dot indicators */}
+          {snaps.length > 1 && (
+            <div className="flex justify-center gap-2 mt-6">
+              {snaps.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => api?.scrollTo(i)}
+                  aria-label={`Go to slide ${i + 1}`}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    selected === i ? 'w-6 bg-[#5DADE2]' : 'w-2 bg-white/30 hover:bg-white/50'
+                  }`}
+                />
+              ))}
+            </div>
+          )}
+          <p className="text-center text-white/40 text-xs mt-3 md:hidden">Swipe to see more</p>
+        </div>
+      </ScrollReveal>
     </section>
   );
 }
