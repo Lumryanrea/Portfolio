@@ -28,7 +28,7 @@ export function FeaturedProjects() {
             className="w-full"
           >
             <CarouselContent className="-ml-4">
-              {portfolioData.projects.map((project, index) => (
+              {portfolioData.projects.map((project) => (
                 <CarouselItem
                   key={project.id}
                   className="pl-4 md:basis-1/2 lg:basis-1/3"
