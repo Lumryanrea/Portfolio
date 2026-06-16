@@ -32,21 +32,20 @@ function ContractIllustration() {
 // Upwork-branded illustration for "Freelance"
 function FreelanceIllustration() {
   return (
-    <svg viewBox="0 0 400 280" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-      <rect width="400" height="280" rx="16" fill="#14A800" />
+    <div className="w-full h-full bg-[#14A800] flex flex-col items-center justify-center gap-3">
       {/* Upwork "up" logomark: the looped "u" */}
-      <g transform="translate(200,118)">
-        <circle cx="34" cy="0" r="22" fill="none" stroke="#ffffff" strokeWidth="13" />
+      <svg viewBox="0 0 130 70" className="w-20 h-12" xmlns="http://www.w3.org/2000/svg">
         <path
-          d="M-50 -28 v30 a26 26 0 0 0 52 0 v-30"
+          d="M14 16 v20 a22 22 0 0 0 44 0 v-20"
           fill="none"
           stroke="#ffffff"
-          strokeWidth="13"
+          strokeWidth="12"
           strokeLinecap="round"
         />
-      </g>
-      <text x="200" y="200" textAnchor="middle" fontFamily="sans-serif" fontWeight="700" fontSize="40" fill="#ffffff" letterSpacing="0.5">Upwork</text>
-    </svg>
+        <circle cx="92" cy="30" r="20" fill="none" stroke="#ffffff" strokeWidth="12" />
+      </svg>
+      <span className="text-white font-bold text-3xl tracking-wide">Upwork</span>
+    </div>
   );
 }
 
