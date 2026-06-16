@@ -4,6 +4,7 @@ import { Hero } from '../components/Hero';
 import { AboutMe } from '../components/AboutMe';
 import { TechStack } from '../components/TechStack';
 import { FeaturedProjects } from '../components/FeaturedProjects';
+import { Services } from '../components/Services';
 import { Certifications } from '../components/Certifications';
 import { Footer } from '../components/Footer';
 
@@ -43,9 +44,13 @@ export function Home() {
       <div className="horizontal-rule mx-6 md:mx-10" />
       
       <FeaturedProjects />
-      
+
       <div className="horizontal-rule mx-6 md:mx-10" />
-      
+
+      <Services />
+
+      <div className="horizontal-rule mx-6 md:mx-10" />
+
       <Certifications />
       
       <div className="horizontal-rule mx-6 md:mx-10" />

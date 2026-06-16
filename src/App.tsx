@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { AnimatePresence } from 'framer-motion';
 import { Home } from './pages/Home';
 import { ProjectDetail } from './components/ProjectDetail';
+import { TeachingPage } from './components/TeachingPage';
+import { ConsultingPage } from './components/ConsultingPage';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -11,6 +13,8 @@ function AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
         <Route path="/project/:id" element={<ProjectDetail />} />
+        <Route path="/teaching" element={<TeachingPage />} />
+        <Route path="/consulting" element={<ConsultingPage />} />
       </Routes>
     </AnimatePresence>
   );

@@ -31,7 +31,8 @@ export const portfolioData = {
   profileImage: "/images/profile.jpg",
   socialLinks: {
     linkedin: "https://www.linkedin.com/in/lumryanrea/",
-    email: "mailto:umarlanre04@gmail.com"
+    email: "mailto:umarlanre04@gmail.com",
+    upwork: "https://www.upwork.com/freelancers/~01cd51b1c2985384a5"
   },
   resumeLink: "https://drive.google.com/file/d/1NMFxYg2ptvTcmjIcB91hFYezZcwXvjLk/view?usp=drive_link",
   
@@ -212,6 +213,57 @@ export const portfolioData = {
     }
   ] as Certification[],
   
+  teaching: {
+    intro: "I teach data analytics and business intelligence in a way that turns confused beginners into confident, hands-on practitioners. My focus is practical, project-based learning across SQL, Excel, Power BI, and the data storytelling skills that make insights land.",
+    images: ["/images/Tutor1.jpeg", "/images/Tutor2.jpeg"],
+    stats: [
+      { label: "Students Taught", value: "50+" },
+      { label: "Years Teaching", value: "2+" },
+      { label: "Cohorts Led", value: "6" },
+      { label: "1-on-1 Sessions", value: "20+" }
+    ],
+    testimonials: [
+      {
+        name: "Orfega Ujinge",
+        role: "Treasury and Investment Manager",
+        company: "Max Capital Investment Limited",
+        email: "Steven@maxcapinvest.com",
+        quote: "Umar is an exceptional instructor and professional. He taught me Excel, Python, Power BI, and SQL with great clarity, patience, and attention to detail. His teaching style is practical and easy to understand, and he consistently went the extra mile by guiding us through real projects with hands-on support. His ability to simplify complex concepts truly sets him apart. I highly recommend him to anyone seeking a skilled and reliable data professional."
+      },
+      {
+        name: "Mayaki Aishat Patience",
+        role: "Data Analyst",
+        company: "Emadan Inspection and Engineering Limited",
+        quote: "As a novice learning Data Science (Python and Excel precisely), Mr. Umar was a huge blessing to me. He had a gift for making complex concepts simple and practical. His patience and passion left a lasting impact, and the skills I gained continue to shape my career today. Truly one of the best!"
+      }
+    ]
+  },
+
+  consulting: {
+    flier: "/images/lumry-flier.png",
+    headlineLead: "From Raw Data to",
+    headlineAccent: "Real Growth",
+    tagline: "We help businesses understand their numbers, improve performance, and make smarter decisions using data.",
+    benefits: [
+      { icon: "money", text: "Know exactly where your money is coming from" },
+      { icon: "search", text: "Identify what is slowing your growth" },
+      { icon: "chart", text: "Track your sales, expenses, and performance clearly" },
+      { icon: "check", text: "Make confident, data-driven decisions" }
+    ],
+    services: [
+      { icon: "report", title: "Business Data Analysis & Reporting" },
+      { icon: "grid", title: "Sales & Inventory Tracking Systems" },
+      { icon: "automation", title: "Business Process Automation" },
+      { icon: "database", title: "Database Setup & Management" },
+      { icon: "workspace", title: "Microsoft & Google Workspace Setup", note: "Excel, Sheets, Forms, Teams & more" },
+      { icon: "ai", title: "AI-Powered Business Solutions", note: "Using AI tools like ChatGPT, Claude, Canva, and Higgsfield to automate work, speed up reporting, and create brand identity designs" }
+    ],
+    ctaTitle: "Get a Free Consultation Today",
+    ctaSubtitle: "Let's help you grow your business with data.",
+    contactEmail: "Lumryanrea@gmail.com",
+    contactPhone: "+234 803 716 6515"
+  },
+
   footer: {
     title: "Thanks!",
     message: "Thank you for taking the time to visit my portfolio!",
