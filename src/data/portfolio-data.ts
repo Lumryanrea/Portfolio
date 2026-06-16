@@ -37,10 +37,10 @@ export const portfolioData = {
   resumeLink: "https://drive.google.com/file/d/1NMFxYg2ptvTcmjIcB91hFYezZcwXvjLk/view?usp=drive_link",
   
   aboutMe: {
-    intro: "Hi, I am Umar, a Business Intelligence Analyst focused on turning complexity into clarity.",
+    intro: "Hi, I'm Umar. A data analyst, a business intelligence consultant, and a founder.",
     paragraphs: [
-      "I help businesses move from manual reporting to automated dashboards that connect directly to their data and deliver real-time insight. My work centers on revenue analysis, pricing influence, contribution to growth, and performance optimization.",
-      "I build analytics systems that explain what is happening and why it matters."
+      "I thrive on deriving outcomes from all kinds of data sources, with the versatility to solve data-related problems across different business sectors. I build data workflows for businesses and leverage artificial intelligence to automate processes, sharpen decisions, and shape brand identity.",
+      "As a continuous learner, I adapt quickly to whatever environment or scenario a goal demands. I believe data revolves around everything we do, and if you're not leveraging data, you're not winning."
     ]
   },
   

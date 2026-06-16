@@ -6,6 +6,7 @@ import { TechStack } from '../components/TechStack';
 import { FeaturedProjects } from '../components/FeaturedProjects';
 import { Services } from '../components/Services';
 import { Certifications } from '../components/Certifications';
+import { QuoteDivider } from '../components/QuoteDivider';
 import { Footer } from '../components/Footer';
 
 export function Home() {
@@ -46,33 +47,34 @@ export function Home() {
       transition={{ duration: 0.3 }}
     >
       <div ref={topRef} />
-      
+
       <Hero onScrollToAbout={scrollToAbout} />
-      
-      <div className="horizontal-rule mx-6 md:mx-10" />
-      
+
+      {/* Short centered divider before About Me */}
+      <div className="w-20 h-px bg-white/15 mx-auto my-8" />
+
       <div ref={aboutRef}>
         <AboutMe />
       </div>
-      
-      <div className="horizontal-rule mx-6 md:mx-10" />
-      
+
+      <QuoteDivider text="I turn raw data into decisions that move your business forward." />
+
       <TechStack />
-      
-      <div className="horizontal-rule mx-6 md:mx-10" />
-      
+
+      <QuoteDivider text="Your business clarity begins with hiring me!" />
+
       <FeaturedProjects />
 
-      <div className="horizontal-rule mx-6 md:mx-10" />
+      <QuoteDivider text="Bring me your data, I'll tell the story." />
 
       <Services />
 
-      <div className="horizontal-rule mx-6 md:mx-10" />
+      <QuoteDivider text="Umar is an exceptional instructor and professional." />
 
       <Certifications />
-      
-      <div className="horizontal-rule mx-6 md:mx-10" />
-      
+
+      <QuoteDivider text="With me in your team, you will make better decisions!" />
+
       <Footer onScrollToTop={scrollToTop} />
     </motion.div>
   );
